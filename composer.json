@@ -1,0 +1,22 @@
+{
+  "name": "cell0/laravel-generic-tests",
+  "description": "The goal of this package is to enable Laravel developers of bigger applications to be able to easily test the generic parts of their Laravel application in a quick but test driven manner.",
+  "require": {
+    "php": ">= 7.1.*",
+    "illuminate/database": "5.7.11",
+    "phpunit/phpunit": "7.4.3"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Diede Gulpers",
+      "email": "diede@cell-0.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Cell0\\LGT\\" : "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
