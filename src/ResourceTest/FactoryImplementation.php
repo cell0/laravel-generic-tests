@@ -8,8 +8,16 @@
 
 namespace Cell0\LGT\ResourceTest;
 
+use PHPUnit\Framework\TestCase;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as AliasesResource;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsResource;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as TransformationsResource;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsTransformationsResource;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsAliasesResource;
+use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsAliasesTransformationsResource;
+use Cell0\LGT\ResourceTest\FactoryResources\AttributesResource;
 
-class FactoryImplementation implements ResourceTestable
+class FactoryImplementation extends TestCase implements ResourceTestable
 {
     /**
      * @var string Namespaced ModelClass name.
@@ -47,8 +55,14 @@ class FactoryImplementation implements ResourceTestable
         }
     }
 
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
     /**
-     * @test Tests all attributes of the resource response based on the specification
+     * @test 
+     * Tests all attributes of the resource response based on the specification
      */
     public function it_passes_the_spec()
     {
@@ -72,24 +86,11 @@ class FactoryImplementation implements ResourceTestable
                 $testcase = new RelationsAliasesTransformationsResource();
                 break;
             default:
-                $testcase = new AttributesResource();
+                $testcase = new AttributesResource($this);
         }
+
         $testcase->assert_specs_met();
     }
-
-//$this->its_response_has_all_attributes()
-//->its_response_has_the_expected_amount_of_attributes()
-//->its_responses_non_transformed_values_match_those_on_the_model();
-//if (!empty($this->aliases)) {
-//$this->its_response_has_the_expected_aliased_attributes();
-//}
-//if (!empty($this->relations)) {
-//    $this->it_does_not_respond_with_not_loaded_relations();
-//    $this->it_does_respond_with_loaded_relations();
-//}
-//if (!empty($this->transformations)) {
-//    $this->its_response_has_the_expected_transformed_attributes();
-//}
 
     private function misses_aliases()
     {

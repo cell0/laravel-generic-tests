@@ -8,7 +8,6 @@
 
 namespace Cell0\LGT\ResourceTest;
 
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Tests\TestCase;
 
 /**
@@ -25,7 +24,8 @@ use Tests\TestCase;
 class SingleClassImplementation extends TestCase
 {
     use CanMessage,
-        Asserts;
+        Asserts,
+        SetsResource;
 
     /**
      * @var string Namespaced ModelClass name.
@@ -119,38 +119,6 @@ class SingleClassImplementation extends TestCase
         if(!empty($this->relations)){
             $this->setResourceWithRelations();
         }
-    }
-
-    /**
-     * Builds up the resource's response.
-     *
-     * @throws \ReflectionException
-     */
-    protected function setResource()
-    {
-        $this->model = factory($this->modelClass)->make(['id' => 0]);
-        $this->resourceResponse = $this->setResourceResponse($this->model);
-    }
-
-    /**
-     * Creates models for all expected relations and sets it to the resource
-     *
-     * @param null $model
-     *
-     * @throws \ReflectionException
-     */
-    private function setResourceWithRelations($model = null)
-    {
-        $model = ($model) ?: factory($this->modelClass)->create();
-        $this->modelWithRelations = $model;
-
-        foreach ($this->relations as $modelRelation) {
-            $relationClassName = get_class($model->$modelRelation()->getRelated());
-            $relatedModel = factory($relationClassName)->make();
-            $model->$modelRelation()->create($relatedModel->toArray());
-            $model->load($modelRelation);
-        }
-        $this->responseWithRelations = $this->setResourceResponse($model);
     }
 
     /**
@@ -263,20 +231,5 @@ class SingleClassImplementation extends TestCase
                 $this->$functionName($this->modelWithRelations, $this->responseWithRelations[$attribute]);
             }
         }
-    }
-
-    /**
-     * Pass the model through the resource and store the response
-     *
-     * @param $model
-     *
-     * @return array
-     *
-     * @throws \ReflectionException
-     */
-    private function setResourceResponse(EloquentModel $model)
-    {
-        $response = (new $this->resourceClass($model))->response();
-        return (array)json_decode($this->getProtectedProperty($response, 'data'))->data;
     }
 }

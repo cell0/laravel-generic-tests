@@ -8,20 +8,18 @@
 
 namespace Cell0\LGT\ResourceTest\FactoryResources;
 
-
 use Cell0\LGT\ResourceTest\CanMessage;
-use Illuminate\Foundation\Testing\TestCase;
+use PHPUnit\Framework\TestCase;
 
-class AttributesResource extends TestCase
-{
+class AttributesResource extends TestCase {
+
     use CanMessage;
 
-    private $attributes;
-
+    private $factory;
 
     public function __construct($factory)
     {
-        $this->attributes = $factory->attributes;
+        $this->attributes = $factory->getAttributes();
         $this->setResponse();
         $this->setExpected();
     }

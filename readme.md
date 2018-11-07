@@ -138,3 +138,5 @@ We plan to take the next steps with the resource tester:
 3. Use the factory pattern to pick what tester to use 
 (currently we need a lot of `if` checks to know what we need to test)
 4. Enable tests for resources that have transformations but have no relations 
+5. Swop out the testcase dependency in the SingleClassImplementation. 
+
