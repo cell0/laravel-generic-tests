@@ -8,15 +8,25 @@
 
 namespace Cell0\LGT\ResourceTest;
 
-use PHPUnit\Framework\TestCase;
-use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as AliasesResource;
-use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsResource;
+
+use Tests\TestCase;
 use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as TransformationsResource;
 use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsTransformationsResource;
 use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsAliasesResource;
 use Cell0\LGT\ResourceTest\FactoryResources\PositiveResource as RelationsAliasesTransformationsResource;
 use Cell0\LGT\ResourceTest\FactoryResources\AttributesResource;
+use Cell0\LGT\ResourceTest\FactoryResources\AliasesResource;
+use Cell0\LGT\ResourceTest\FactoryResources\RelationsResource;
 
+/**
+ * Class FactoryImplementation
+ *
+ * TODO fix the dependency on the Tests\TestCase;
+ *
+ * @package Cell0\LGT\ResourceTest
+ *
+ * @author Diede Gulpers <diede@cell-0.com>
+ */
 class FactoryImplementation extends TestCase implements ResourceTestable
 {
     /**
@@ -55,9 +65,24 @@ class FactoryImplementation extends TestCase implements ResourceTestable
         }
     }
 
+    public function getRelations()
+    {
+        return $this->relations;
+    }
+
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
+
+    public function getResourceClass()
+    {
+        return $this->resourceClass;
     }
 
     /**
@@ -68,22 +93,22 @@ class FactoryImplementation extends TestCase implements ResourceTestable
     {
         switch (true) {
             case ($this->has_aliases() &&  $this->misses_relations() && $this->misses_transformations()):
-                $testcase = new AliasesResource();
+                $testcase = new AliasesResource($this);
                 break;
             case ($this->misses_aliases() && $this->has_relations() && $this->misses_transformations()):
-                $testcase = new RelationsResource();
+                $testcase = new RelationsResource($this);
                 break;
             case ($this->misses_aliases() && $this->misses_relations() && $this->has_transformations()):
-                $testcase = new TransformationsResource();
+                $testcase = new TransformationsResource($this);
                 break;
             case ($this->misses_aliases() && $this->has_relations() && $this->has_transformations()):
-                $testcase = new RelationsTransformationsResource();
+                $testcase = new RelationsTransformationsResource($this);
                 break;
             case ($this->has_aliases() && $this->has_relations() && $this->misses_transformations()):
-                $testcase = new RelationsAliasesResource();
+                $testcase = new RelationsAliasesResource($this);
                 break;
             case ($this->has_aliases() && $this->has_relations() && $this->has_transformations()):
-                $testcase = new RelationsAliasesTransformationsResource();
+                $testcase = new RelationsAliasesTransformationsResource($this);
                 break;
             default:
                 $testcase = new AttributesResource($this);

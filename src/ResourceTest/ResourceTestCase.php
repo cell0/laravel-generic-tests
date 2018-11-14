@@ -12,4 +12,4 @@ namespace Cell0\LGT\ResourceTest;
  *
  * @author Diede Gulpers <diede@cell-0.com>
  */
-class ResourceTestCase extends SingleClassImplementation implements ResourceTestable {}
+class ResourceTestCase extends FactoryImplementation implements ResourceTestable {}

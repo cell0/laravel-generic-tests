@@ -31,7 +31,7 @@ trait SetsResource
      *
      * @throws \ReflectionException
      */
-    private function setResourceWithRelations($model = null)
+    protected function setResourceWithRelations($model = null)
     {
         $model = ($model) ?: factory($this->modelClass)->create();
         $this->modelWithRelations = $model;

@@ -14,7 +14,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Cell0\\LGT\\" : "src/"
+      "Cell0\\LGT\\" : "src/",
+      "Cell0\\LGT\\Tests\\" : "tests/"
     }
   },
   "minimum-stability": "dev"

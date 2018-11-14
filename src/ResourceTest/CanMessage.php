@@ -39,10 +39,9 @@ trait CanMessage
      *
      * @return string
      */
-    private function unexpected_attribute_amount()
+    private function unexpected_attribute_amount($expectedAttributes)
     {
         $responseKeys = array_keys($this->resourceResponse);
-        $expectedAttributes = array_merge($this->attributes, array_keys($this->aliases), $this->transformations);
         $moreKeysThenExpected = array_diff($responseKeys, $expectedAttributes);
         $lessKeysThenExpected = array_diff($expectedAttributes, $responseKeys);
 

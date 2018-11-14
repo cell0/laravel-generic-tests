@@ -162,7 +162,7 @@ class SingleClassImplementation extends TestCase
         $expectedAttributes =  (!empty($this->relations)) ? array_merge($expectedAttributes, array_keys($this->relations)) : $expectedAttributes;
         $response = (!empty($this->relations)) ? $this->responseWithRelations : $this->resourceResponse;
         $this->assertEquals(count($expectedAttributes), count($response),
-            $this->unexpected_attribute_amount());
+            $this->unexpected_attribute_amount(array_merge($this->attributes, array_keys($this->aliases), $this->transformations)));
         return $this;
     }
 

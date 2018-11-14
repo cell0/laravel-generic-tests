@@ -8,20 +8,26 @@
 
 namespace Cell0\LGT\ResourceTest\FactoryResources;
 
+use App\Models\Roles\Role;
 use Cell0\LGT\ResourceTest\CanMessage;
+use Cell0\LGT\ResourceTest\SetsResource;
 use PHPUnit\Framework\TestCase;
 
 class AttributesResource extends TestCase {
 
-    use CanMessage;
+    use CanMessage,
+        SetsResource;
 
     private $factory;
 
+    protected $expected;
+
     public function __construct($factory)
     {
-        $this->attributes = $factory->getAttributes();
-        $this->setResponse();
-        $this->setExpected();
+        $this->modelClass = $factory->getModelClass();
+        $this->resourceClass = $factory->getResourceClass();
+        $this->setResource();
+        $this->expected = $factory->getAttributes();
     }
 
     public function assert_specs_met()
@@ -36,7 +42,7 @@ class AttributesResource extends TestCase {
      */
     protected function its_response_has_all_attributes()
     {
-        foreach ($this->attributes as $attribute) {
+        foreach ($this->expected as $attribute) {
             $this->assertArrayHasKey($attribute, $this->resourceResponse,
                 $this->message("the resource has the wrong attribute:"));
         }
@@ -48,8 +54,8 @@ class AttributesResource extends TestCase {
      */
     protected function its_response_has_the_expected_amount_of_attributes()
     {
-        $this->assertEquals(count($this->attributes), count($this->resourceResponse),
-            $this->unexpected_attribute_amount());
+        $this->assertEquals(count($this->expected), count($this->resourceResponse),
+            $this->unexpected_attribute_amount($this->expected));
         return $this;
     }
 
